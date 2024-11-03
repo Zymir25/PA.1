@@ -29,8 +29,8 @@ function handleFormSubmit(event) {
 
     const newReview = document.getElementById("newReview").value;
     if (newReview.trim()) {
-        displayNewReview(newReview);  // Display the review on the page
-        sendReviewToServer(newReview);  // Attempt to send the review to the server
+        displayNewReview(newReview);  // Display the review on the page immediately
+        sendReviewToServer(newReview);  // Send the review to the server for persistence
         document.getElementById("reviewForm").reset();  // Clear the form
     }
 }
@@ -46,11 +46,12 @@ function displayNewReview(review) {
 // Function to send the new review to the server
 async function sendReviewToServer(review) {
     try {
-        await fetch("http://localhost:5000/reviews", {
+        const response = await fetch("http://localhost:5000/reviews", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ review }),
         });
+        if (!response.ok) throw new Error("Failed to save review on server");
     } catch (error) {
         console.error("Could not save review to server:", error);
     }

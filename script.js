@@ -20,8 +20,6 @@ document.getElementById("reviewForm").addEventListener("submit", async (e) => {
         console.warn("Server not available, saving locally:", error);
     }
 
-    // Save review to local storage
-    saveReviewToLocal(newReview);
 
     // Reset the form and reload reviews
     document.getElementById("reviewForm").reset();
